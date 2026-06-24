@@ -2,18 +2,18 @@
 
 **Documentação vivente do projecto.** Actualizar neste ficheiro quando o comportamento, o deploy ou o âmbito mudar materialmente.
 
-**Versão:** 0.3.0  
+**Versão:** 0.4.0  
 **Última actualização:** 2026-06-03  
 **Pasta oficial:** `C:\Users\orlan\macow`  
-**Remoto (previsto):** `https://github.com/Viralforgebr/macow.git` (branch `master`)
+**Remoto:** `https://github.com/Viralforgebr/macow.git` (branch `master`)
 
 ---
 
 ## Visão
 
-**Landing page** do artista **Macow** e da sua discografia. Servida por **PHP** + **Tailwind CSS** (CDN). Upload **manual** para o domínio — sem pipeline de frontend nem API.
+**Landing page** do artista **Macow** e da sua discografia. Servida por **PHP** + **CSS** (`css/macow.css`). Upload **manual** para o domínio — sem pipeline de frontend nem API.
 
-**Referência visual (só inspiração):** landing do ViralForge (`C:\Users\orlan\viralforge\frontend\app\page.tsx`) — fundo escuro, roxo/rosa, Inter. **Não copiar** stack React/Next.
+**Referência visual (só inspiração):** landing do ViralForge (`C:\Users\orlan\viralforge\frontend\app\page.tsx`) — fundo escuro, roxo/rosa, Inter, cards com borda, nav com blur. **Não copiar** stack React/Next.
 
 ---
 
@@ -22,7 +22,7 @@
 | Usar | Não usar |
 |------|----------|
 | **PHP** — ficheiro único `index.php` | Next.js, React, Vue, SPA com build |
-| **Tailwind CSS** (CDN) + `css/macow.css` | FastAPI, Node backend, Supabase |
+| **CSS** — `css/macow.css` + Inter (Google Fonts) | FastAPI, Node backend, Supabase |
 | Assets locais (`css/`, `imagens/`) | Servidor frontend (`npm run dev`) |
 | Upload manual para hosting | Deploy automático (salvo ordem futura) |
 
@@ -71,16 +71,23 @@ macow/
 ## Layout (desktop-first)
 
 ```
+[NAV fixa — logo Macow + ícones redes (WhatsApp destacado)]
+
 [========== banner topo (header.*) — 300px altura, object-position top ==========]
+
+[Faixa: catálogo para artistas/editoras + links diretos por faixa]
 
 Linha 1:  [M][M][M] | [MACOW 2×2 + ícones redes]
 Linha 2:  [M][M][M] | [      continua 2×2      ]
 Linha 3+: [M][M][M][M][M]  (só músicas, 5 colunas)
+
+[Footer — © Macow · Instagram]
 ```
 
 - Grid **5 colunas**, unidades relativas (`vw`, `clamp`, `aspect-ratio`).
-- Cada música: **título** → **ícones** → **capa 1×1**.
-- Bloco artista: título «Acesse minhas redes sociais» → ícones → canvas **2×2**.
+- Cada música: **card** → título → ícones → capa 1×1.
+- Bloco artista: **card** → «Acesse minhas redes sociais» → ícones → canvas **2×2**.
+- **1920px:** gaps e padding ajustados para evitar scroll horizontal (`box-sizing: border-box`, `overflow-x: clip`).
 
 ### Ordem fixa das 10 músicas (esquerda→direita, cima→baixo)
 
@@ -97,28 +104,43 @@ Linha 3+: [M][M][M][M][M]  (só músicas, 5 colunas)
 
 ---
 
+## UI (polimento ViralForge, simples)
+
+| Elemento | Comportamento |
+|----------|----------------|
+| **Nav** | Sticky, blur, borda inferior roxa; ícones das redes (maiores que nos cards) |
+| **Banner** | Overlay gradiente na base |
+| **Faixa** | Texto catálogo + «links diretos em cada faixa» |
+| **Cards** | Borda, fundo semi-transparente, hover leve |
+| **Capas** | Borda roxa, sombra, zoom subtil no hover |
+| **Footer** | Linha separadora + link Instagram |
+
+---
+
 ## Canvas do artista (`macow.mp4`)
 
 - Vídeo: `<video autoplay muted loop playsinline>` — **sempre mudo**, loop contínuo.
 - **Áudio:** `<audio preload="none">` — só carrega e toca **ao clicar** no canvas.
-- **Correcção loop:** MP4 exportado com ~60 s de metadados mas vídeo congelava aos ~26 s (DaVinci). Ficheiro **cortado a ~25,875 s**; removido `macow.webm` (PHP preferia o último ficheiro e quebrava loop).
+- **Correcção loop:** MP4 cortado a ~25,875 s; removido `macow.webm`.
 - **Não** manipular `currentTime` em JS durante playback.
 
 ---
 
 ## Ícones e links
 
-Ordem (artista e músicas): **Spotify · YouTube · YouTube Music · Apple Music · TikTok · Instagram · Amazon Music · Facebook**
+Ordem: **Spotify · YouTube · YouTube Music · Apple Music · TikTok · Instagram · Amazon Music · Facebook · WhatsApp**
 
 | Área | Plataformas com link |
 |------|----------------------|
-| **Artista** | Todas (8 ícones) |
-| **Músicas** | **Spotify, YouTube, YouTube Music, Apple Music, Amazon Music** (10 faixas cada) |
-| **Músicas (sem link)** | TikTok, Instagram, Facebook — ícones visíveis, URL por activar |
+| **Nav + artista** | Todas (9 ícones) |
+| **Músicas** | Spotify, YouTube, YT Music, Apple, Amazon (10 faixas) |
+| **Músicas (sem link)** | TikTok, Instagram, Facebook, WhatsApp — ícone visível |
 
-YouTube e YouTube Music são **ícones e URLs separados**. Não há ícone iTunes (só Apple Music).
+**WhatsApp (artista/nav):** após Facebook, **2 cm** de separação, **2× tamanho** dos outros ícones. URL `wa.me/5561995717544` com mensagem pré-preenchida: *«Gostaria de saber mais sobre seu catálogo de músicas»*.
 
-Links definidos em `$artistLinks` e `$songLinks` no topo de `index.php`. Funções: `macow_icon()`, `macow_platform_icons()`.
+YouTube e YouTube Music são **ícones e URLs separados**. Não há ícone iTunes.
+
+Links em `$artistLinks` e `$songLinks` no topo de `index.php`. Funções: `macow_icon()`, `macow_platform_icons()`.
 
 ### Artista — URLs actuais
 
@@ -132,6 +154,12 @@ Links definidos em `$artistLinks` e `$songLinks` no topo de `index.php`. Funçõ
 | Instagram | `https://www.instagram.com/macow_official/` |
 | Amazon Music | `https://music.amazon.com/artists/B08R79YXKN/macow` |
 | Facebook | `https://www.facebook.com/MacowOfficial` |
+| WhatsApp | `https://wa.me/5561995717544?text=…` (mensagem catálogo) |
+
+### Faixa de destaque (texto fixo)
+
+1. *Catálogo de músicas disponíveis para artistas e editoras, mediante contato.*
+2. *Ouça em todas as plataformas — links diretos em cada faixa.*
 
 ### Músicas — plataformas ligadas (10 faixas)
 
@@ -139,11 +167,9 @@ Links definidos em `$artistLinks` e `$songLinks` no topo de `index.php`. Funçõ
 |------------|-------|
 | **Spotify** | Link por faixa |
 | **YouTube** | Singles: playlist; faixas EP: `youtu.be` |
-| **YouTube Music** | Par com YouTube (playlist ou `watch`) |
-| **Amazon Music** | Singles: URL de álbum; faixas EP: álbum `B0H6CBJ4P2` + `trackAsin` |
+| **YouTube Music** | Par com YouTube |
+| **Amazon Music** | Singles: álbum; EP: `B0H6CBJ4P2` + `trackAsin` |
 | **Apple Music** | URL de álbum/single ou song por faixa |
-
-Chaves em `$songLinks` usam títulos de exibição (ex.: `'Lef It For Tomorrow'`, `'Mais Um Clique'`).
 
 ---
 
@@ -155,17 +181,18 @@ Chaves em `$songLinks` usam títulos de exibição (ex.: `'Lef It For Tomorrow'`
 | Primária | `#7C3AED` |
 | Secundária | `#A78BFA` |
 | Accent | `#EC4899` |
+| WhatsApp | `#25D366` |
 
-- Tipografia: **Inter** (Google Fonts).
+- Tipografia: **Inter** (Google Fonts, pesos 400–800).
 - Idioma da página: `pt-BR`.
 
 ---
 
 ## Regras de trabalho (agente / Cursor)
 
-1. **Só Macow** — não alterar Aigree (`C:\Users\orlan\aigree`) nem ViralForge salvo referência visual.
+1. **Só Macow** — não alterar Aigree nem ViralForge salvo referência visual.
 2. **Só o pedido** — sem backend, auth, CMS ou ficheiros extra sem avisar.
-3. **PHP + Tailwind** — sem React/Next no Macow.
+3. **PHP + CSS** — sem React/Next no Macow.
 4. **Upload-friendly** — funciona após FTP/cPanel sem `npm install`.
 5. **Não re-encodar `macow.mp4`** sem pedido explícito.
 6. **SSOS** — actualizar este ficheiro quando mudar comportamento, links ou estrutura material.
@@ -176,11 +203,11 @@ Chaves em `$songLinks` usam títulos de exibição (ex.: `'Lef It For Tomorrow'`
 
 | Área | Estado |
 |------|--------|
-| Landing desktop | **Pronta** — grid, banner, vídeo em loop, áudio no clique |
-| Links artista | **Completos** (8 plataformas) |
-| Links músicas | **Spotify, YouTube, YT Music, Apple, Amazon** — 10 faixas; TikTok/Instagram/Facebook por activar |
-| Mobile | **Por fazer** (adaptar quando pedido) |
-| Git | Repositório local; remoto `Viralforgebr/macow` |
+| Landing desktop | **Pronta** — UI polida, grid, vídeo, áudio no clique |
+| Links artista | **Completos** (9 plataformas incl. WhatsApp) |
+| Links músicas | **Spotify, YouTube, YT Music, Apple, Amazon** — 10 faixas |
+| Mobile | **Por fazer** |
+| Git | **Sincronizado** com `origin/master` |
 
 ---
 
@@ -197,5 +224,6 @@ Chaves em `$songLinks` usam títulos de exibição (ex.: `'Lef It For Tomorrow'`
 | Versão | Data | Notas |
 |--------|------|-------|
 | 0.1.0 | 2026-06-23 | Projecto iniciado: PHP + Tailwind, deploy manual |
-| 0.2.0 | 2026-06-03 | Landing funcional: grid, vídeo, ordem das músicas, links Spotify (10 faixas) + redes do artista (8 plataformas); correcção loop MP4 |
-| 0.3.0 | 2026-06-03 | YouTube Music separado; iTunes removido; links músicas completos (Spotify, YouTube, YT Music, Apple, Amazon); SSOS alinhado ao código |
+| 0.2.0 | 2026-06-03 | Landing funcional: grid, vídeo, links Spotify + redes artista; correcção loop MP4 |
+| 0.3.0 | 2026-06-03 | YouTube Music separado; links músicas em 5 plataformas; git inicial |
+| 0.4.0 | 2026-06-03 | UI estilo ViralForge (nav, cards, faixa, footer); WhatsApp destacado com mensagem; CSS puro; ajuste 1920px sem scroll horizontal |

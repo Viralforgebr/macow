@@ -113,11 +113,13 @@ function macow_icon(string $kind, ?string $href = null): string
             'tiktok' => '<svg viewBox="0 0 24 24" fill="#ffffff"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>',
             'instagram' => '<svg viewBox="0 0 24 24" fill="#E4405F"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>',
             'facebook' => '<svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+            'whatsapp' => '<svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>',
         ];
         if (!isset($icons[$kind])) {
             return '';
         }
-        $inner = '<span class="macow-icon" aria-hidden="true">' . $icons[$kind] . '</span>';
+        $iconClass = 'macow-icon' . ($kind === 'whatsapp' ? ' macow-icon-whatsapp' : '');
+        $inner = '<span class="' . $iconClass . '" aria-hidden="true">' . $icons[$kind] . '</span>';
     }
 
     if ($href === null || $href === '') {
@@ -133,15 +135,17 @@ function macow_icon(string $kind, ?string $href = null): string
         'instagram' => 'Instagram',
         'amazon' => 'Amazon Music',
         'facebook' => 'Facebook',
+        'whatsapp' => 'WhatsApp',
     ];
     $label = $labels[$kind] ?? ucfirst($kind);
+    $linkClass = 'macow-icon-link' . ($kind === 'whatsapp' ? ' macow-icon-link-whatsapp' : '');
 
-    return '<a class="macow-icon-link" href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="noopener noreferrer" aria-label="' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '">' . $inner . '</a>';
+    return '<a class="' . $linkClass . '" href="' . htmlspecialchars($href, ENT_QUOTES, 'UTF-8') . '" target="_blank" rel="noopener noreferrer" aria-label="' . htmlspecialchars($label, ENT_QUOTES, 'UTF-8') . '">' . $inner . '</a>';
 }
 
 function macow_platform_icons(array $links = [], ?array $order = null): string
 {
-    $order = $order ?? ['spotify', 'youtube', 'youtube-music', 'apple', 'tiktok', 'instagram', 'amazon', 'facebook'];
+    $order = $order ?? ['spotify', 'youtube', 'youtube-music', 'apple', 'tiktok', 'instagram', 'amazon', 'facebook', 'whatsapp'];
     $html = '';
     foreach ($order as $kind) {
         $html .= macow_icon($kind, $links[$kind] ?? null);
@@ -158,6 +162,7 @@ $artistLinks = [
     'facebook' => 'https://www.facebook.com/MacowOfficial',
     'instagram' => 'https://www.instagram.com/macow_official/',
     'amazon' => 'https://music.amazon.com/artists/B08R79YXKN/macow',
+    'whatsapp' => 'https://wa.me/5561995717544?text=' . rawurlencode('Gostaria de saber mais sobre seu catálogo de músicas'),
 ];
 
 $songLinks = [
@@ -241,11 +246,15 @@ $songLinks = [
     <title>Macow</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/macow.css" />
 </head>
-<body class="min-h-screen text-white antialiased">
+<body class="macow-page">
+
+    <nav class="macow-nav" aria-label="Principal">
+        <p class="macow-logo">Macow</p>
+        <div class="macow-icons macow-nav-icons"><?= macow_platform_icons($artistLinks) ?></div>
+    </nav>
 
     <header class="macow-banner">
         <?php if ($hero): ?>
@@ -257,46 +266,57 @@ $songLinks = [
         <?php endif; ?>
     </header>
 
-    <main class="w-full px-[2.5vw] pb-[4vw] pt-[2vw]">
+    <?php if (!empty($songs) || $artist): ?>
+    <section class="macow-band" aria-label="Destaque">
+        <p class="macow-band-catalog">Catálogo de músicas disponíveis para artistas e editoras, mediante contato.</p>
+        <p>Ouça em todas as plataformas — <span class="macow-band-accent">links diretos em cada faixa</span>.</p>
+    </section>
+    <?php endif; ?>
+
+    <main class="macow-main">
         <?php if (empty($songs) && !$artist): ?>
-            <p class="text-center text-white/45 text-[clamp(13px,1vw,16px)] py-[6vw]">
-                Coloque as capas em <code class="text-violet-300">imagens/</code> — uma por música (nome do ficheiro = título) e <code class="text-violet-300">macow.mp4</code> para o artista.
+            <p class="macow-empty">
+                Coloque as capas em <code>imagens/</code> — uma por música (nome do ficheiro = título) e <code>macow.mp4</code> para o artista.
             </p>
         <?php else: ?>
+        <div class="macow-section-head">
+            <p class="macow-section-label">Discografia</p>
+            <h2 class="macow-section-title">Todas as faixas. <span>Um clique.</span></h2>
+        </div>
         <div class="macow-grid">
             <?php for ($i = 0; $i < 3; $i++): ?>
                 <?php if (isset($headSongs[$i])): ?>
-                <div style="grid-column:<?= $i + 1 ?>;grid-row:1" class="flex flex-col gap-[0.4vw] min-w-0">
-                    <h3 class="text-[clamp(11px,0.95vw,15px)] font-semibold text-white/90 truncate text-center"><?= htmlspecialchars($headSongs[$i]['name'], ENT_QUOTES, 'UTF-8') ?></h3>
+                <div style="grid-column:<?= $i + 1 ?>;grid-row:1" class="macow-song-card">
+                    <h3 class="macow-song-title"><?= htmlspecialchars($headSongs[$i]['name'], ENT_QUOTES, 'UTF-8') ?></h3>
                     <div class="macow-icons"><?= macow_platform_icons($songLinks[$headSongs[$i]['name']] ?? []) ?></div>
                     <div class="macow-cover"><img src="<?= htmlspecialchars($headSongs[$i]['image'], ENT_QUOTES, 'UTF-8') ?>" alt="" loading="lazy" /></div>
                 </div>
                 <?php endif; ?>
             <?php endfor; ?>
 
-            <div class="flex flex-col gap-[0.4vw] min-w-0" style="grid-column:4 / span 2; grid-row:1 / span 2">
-                <h3 class="text-[clamp(11px,0.95vw,15px)] font-semibold text-white/90 truncate text-center">Acesse minhas redes sociais</h3>
+            <div class="macow-artist-card" style="grid-column:4 / span 2; grid-row:1 / span 2">
+                <h3 class="macow-artist-title">Acesse minhas redes sociais</h3>
                 <div class="macow-icons"><?= macow_platform_icons($artistLinks) ?></div>
                 <?php if ($artist): ?>
                     <?php if ($artist['media'] === 'video'): ?>
-                    <div id="macow-artist-canvas" class="macow-cover macow-artist-canvas flex-1 border-violet-500/25 shadow-xl shadow-violet-900/20" role="button" tabindex="0" aria-label="Macow — clique para activar o áudio">
+                    <div id="macow-artist-canvas" class="macow-cover macow-artist-canvas" role="button" tabindex="0" aria-label="Macow — clique para activar o áudio">
                         <video id="macow-canvas-video" src="<?= htmlspecialchars($artistVideoSrc, ENT_QUOTES, 'UTF-8') ?>" autoplay muted loop playsinline></video>
                         <audio id="macow-canvas-audio" preload="none"></audio>
                     </div>
                     <?php else: ?>
-                    <div class="macow-cover flex-1 border-violet-500/25 shadow-xl shadow-violet-900/20">
+                    <div class="macow-cover">
                         <img src="<?= htmlspecialchars($artist['src'], ENT_QUOTES, 'UTF-8') ?>" alt="Macow" />
                     </div>
                     <?php endif; ?>
                 <?php else: ?>
-                    <div class="macow-cover flex items-center justify-center text-white/30 text-sm border-dashed">imagens/macow.mp4</div>
+                    <div class="macow-cover macow-cover-placeholder">imagens/macow.mp4</div>
                 <?php endif; ?>
             </div>
 
             <?php for ($i = 3; $i < 6; $i++): ?>
                 <?php if (isset($headSongs[$i])): ?>
-                <div style="grid-column:<?= $i - 2 ?>;grid-row:2" class="flex flex-col gap-[0.4vw] min-w-0">
-                    <h3 class="text-[clamp(11px,0.95vw,15px)] font-semibold text-white/90 truncate text-center"><?= htmlspecialchars($headSongs[$i]['name'], ENT_QUOTES, 'UTF-8') ?></h3>
+                <div style="grid-column:<?= $i - 2 ?>;grid-row:2" class="macow-song-card">
+                    <h3 class="macow-song-title"><?= htmlspecialchars($headSongs[$i]['name'], ENT_QUOTES, 'UTF-8') ?></h3>
                     <div class="macow-icons"><?= macow_platform_icons($songLinks[$headSongs[$i]['name']] ?? []) ?></div>
                     <div class="macow-cover"><img src="<?= htmlspecialchars($headSongs[$i]['image'], ENT_QUOTES, 'UTF-8') ?>" alt="" loading="lazy" /></div>
                 </div>
@@ -308,8 +328,8 @@ $songLinks = [
             $col = 1;
             foreach ($tailSongs as $song):
             ?>
-            <div style="grid-column:<?= $col ?>;grid-row:<?= $row ?>" class="flex flex-col gap-[0.4vw] min-w-0">
-                <h3 class="text-[clamp(11px,0.95vw,15px)] font-semibold text-white/90 truncate text-center"><?= htmlspecialchars($song['name'], ENT_QUOTES, 'UTF-8') ?></h3>
+            <div style="grid-column:<?= $col ?>;grid-row:<?= $row ?>" class="macow-song-card">
+                <h3 class="macow-song-title"><?= htmlspecialchars($song['name'], ENT_QUOTES, 'UTF-8') ?></h3>
                 <div class="macow-icons"><?= macow_platform_icons($songLinks[$song['name']] ?? []) ?></div>
                 <div class="macow-cover"><img src="<?= htmlspecialchars($song['image'], ENT_QUOTES, 'UTF-8') ?>" alt="" loading="lazy" /></div>
             </div>
@@ -321,6 +341,10 @@ $songLinks = [
         </div>
         <?php endif; ?>
     </main>
+
+    <footer class="macow-footer">
+        <p>© Macow · <a href="<?= htmlspecialchars($artistLinks['instagram'], ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer">@macow_official</a></p>
+    </footer>
     <?php if ($artistVideo): ?>
     <script>
     (function () {

@@ -1,69 +1,87 @@
-body {
+/* ── Base ─────────────────────────────────────────────────────────────── */
+html {
+  overflow-x: clip;
+}
+
+body.macow-page {
   margin: 0;
-  background: #0f0f0f;
+  min-height: 100vh;
+  overflow-x: clip;
   font-family: Inter, system-ui, sans-serif;
+  color: #fff;
+  background-color: #0f0f0f;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% -10%, rgba(124, 58, 237, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 90% 0%, rgba(236, 72, 153, 0.1), transparent 50%);
 }
 
-.macow-icon {
-  display: inline-flex;
-  flex-shrink: 0;
-  width: clamp(12px, 0.95vw, 20px);
-  height: clamp(12px, 0.95vw, 20px);
+body.macow-page,
+body.macow-page *,
+body.macow-page *::before,
+body.macow-page *::after {
+  box-sizing: border-box;
 }
 
-.macow-icons {
+/* ── Nav ──────────────────────────────────────────────────────────────── */
+.macow-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
   align-items: center;
-  gap: clamp(5px, 0.75vw, 12px);
-  width: 100%;
-  margin-inline: auto;
-  text-align: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 clamp(16px, 3vw, 56px);
+  height: clamp(52px, 4.5vw, 64px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 0, 40, 0.55);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.18);
 }
 
-.macow-icon svg,
-.macow-icon img {
-  width: 100%;
-  height: 100%;
-  display: block;
+.macow-logo {
+  margin: 0;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #fff 0%, #e2d9ff 55%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.macow-icon-link {
-  display: inline-flex;
-  flex-shrink: 0;
-  text-decoration: none;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+.macow-nav-icons {
+  flex-shrink: 1;
+  min-width: 0;
+  justify-content: flex-end;
+  gap: clamp(5px, 0.6vw, 11px);
+  padding: 0;
 }
 
-.macow-icon-link:hover {
-  opacity: 0.85;
-  transform: scale(1.08);
+.macow-nav-icons .macow-icon {
+  width: clamp(15px, 1.1vw, 22px);
+  height: clamp(15px, 1.1vw, 22px);
 }
 
-.macow-icon-img img {
-  object-fit: contain;
-}
-
-.macow-icon-amazon {
-  border-radius: 15%;
-  overflow: hidden;
-}
-
-.macow-grid {
-  display: grid;
-  width: 100%;
-  gap: 1.2vw;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-auto-rows: auto;
-}
-
+/* ── Banner ───────────────────────────────────────────────────────────── */
 .macow-banner {
+  position: relative;
   width: 100%;
   height: 300px;
   overflow: hidden;
   line-height: 0;
   background: #0f0f0f;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.22);
+}
+
+.macow-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, transparent 55%, rgba(15, 15, 15, 0.85) 100%),
+    linear-gradient(to right, rgba(15, 15, 15, 0.35) 0%, transparent 35%);
 }
 
 .macow-banner img {
@@ -91,14 +109,218 @@ body {
   color: rgba(255, 255, 255, 0.25);
 }
 
+/* ── Faixa de destaque ──────────────────────────────────────────────────── */
+.macow-band {
+  padding: clamp(20px, 2.5vw, 32px) clamp(16px, 3vw, 56px);
+  text-align: center;
+  background: rgba(124, 58, 237, 0.06);
+  border-bottom: 1px solid rgba(124, 58, 237, 0.15);
+}
+
+.macow-band p {
+  margin: 0;
+  max-width: 52rem;
+  margin-inline: auto;
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.55;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.macow-band-catalog {
+  margin-bottom: clamp(6px, 0.6vw, 10px) !important;
+  color: rgba(255, 255, 255, 0.58) !important;
+  font-size: clamp(12px, 0.9vw, 14px) !important;
+}
+
+.macow-band-accent {
+  background: linear-gradient(135deg, #a78bfa, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Main / secção ──────────────────────────────────────────────────────── */
+.macow-main {
+  width: 100%;
+  max-width: 100%;
+  padding: clamp(18px, 2vw, 28px) clamp(14px, 1.8vw, 28px) clamp(28px, 3.5vw, 48px);
+}
+
+.macow-section-head {
+  margin-bottom: clamp(16px, 2vw, 28px);
+}
+
+.macow-section-label {
+  margin: 0 0 8px;
+  font-size: clamp(10px, 0.75vw, 12px);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #a78bfa;
+}
+
+.macow-section-title {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.macow-section-title span {
+  background: linear-gradient(135deg, #ec4899, #a78bfa);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Grid ───────────────────────────────────────────────────────────────── */
+.macow-grid {
+  display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  gap: clamp(6px, 0.85vw, 12px);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: auto;
+}
+
+/* ── Cards (música + artista) ───────────────────────────────────────────── */
+.macow-song-card,
+.macow-artist-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 0.4vw, 8px);
+  min-width: 0;
+  padding: clamp(5px, 0.5vw, 8px);
+  border-radius: clamp(8px, 0.75vw, 14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.macow-song-card:hover {
+  border-color: rgba(124, 58, 237, 0.35);
+  background: rgba(124, 58, 237, 0.06);
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.12);
+  transform: translateY(-2px);
+}
+
+.macow-artist-card {
+  border-color: rgba(124, 58, 237, 0.2);
+  background: rgba(124, 58, 237, 0.05);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+.macow-artist-card .macow-cover,
+.macow-artist-card .macow-artist-canvas,
+.macow-artist-card .macow-cover-placeholder {
+  flex: 1;
+  min-height: 0;
+}
+
+.macow-song-title,
+.macow-artist-title {
+  margin: 0;
+  font-size: clamp(11px, 0.95vw, 15px);
+  font-weight: 700;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.92);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.macow-artist-title {
+  font-size: clamp(11px, 0.95vw, 14px);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.02em;
+}
+
+/* ── Ícones ─────────────────────────────────────────────────────────────── */
+.macow-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: clamp(11px, 0.82vw, 17px);
+  height: clamp(11px, 0.82vw, 17px);
+}
+
+.macow-icons {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(3px, 0.5vw, 8px);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: clamp(2px, 0.25vw, 4px) 0;
+  text-align: center;
+}
+
+.macow-icon svg,
+.macow-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.macow-icon-link {
+  display: inline-flex;
+  flex-shrink: 0;
+  text-decoration: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.macow-icon-link:hover {
+  opacity: 0.85;
+  transform: scale(1.1);
+}
+
+.macow-icon-img img {
+  object-fit: contain;
+}
+
+.macow-icon-amazon {
+  border-radius: 15%;
+  overflow: hidden;
+}
+
+.macow-icon-link-whatsapp,
+.macow-icon.macow-icon-whatsapp {
+  margin-left: 2cm;
+  flex-shrink: 0;
+}
+
+.macow-icons .macow-icon-whatsapp {
+  width: clamp(22px, 1.64vw, 34px);
+  height: clamp(22px, 1.64vw, 34px);
+}
+
+.macow-nav-icons .macow-icon-whatsapp {
+  width: clamp(30px, 2.2vw, 44px);
+  height: clamp(30px, 2.2vw, 44px);
+}
+
+/* ── Capas ──────────────────────────────────────────────────────────────── */
 .macow-cover {
   aspect-ratio: 1 / 1;
   width: 100%;
-  border-radius: 0.6vw;
+  border-radius: clamp(6px, 0.55vw, 10px);
   overflow: hidden;
-  border: 1px solid rgba(124, 58, 237, 0.2);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.macow-song-card:hover .macow-cover {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.18);
 }
 
 .macow-cover img,
@@ -107,20 +329,81 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease;
+}
+
+.macow-song-card:hover .macow-cover img {
+  transform: scale(1.02);
 }
 
 .macow-artist-canvas {
   cursor: pointer;
+  flex: 1;
+  border-color: rgba(124, 58, 237, 0.35);
+  box-shadow: 0 12px 36px rgba(124, 58, 237, 0.15);
 }
 
 .macow-artist-canvas audio {
   display: none;
 }
 
-.macow-log-row-odd {
-  background: rgba(124, 58, 237, 0.1);
+.macow-cover-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(11px, 0.85vw, 13px);
+  color: rgba(255, 255, 255, 0.3);
+  border-style: dashed;
 }
 
-.macow-log-row-even {
-  background: rgba(255, 255, 255, 0.04);
+/* Ecrãs largos (ex.: 1920px) — evita scroll horizontal */
+@media (min-width: 1280px) {
+  .macow-main {
+    padding-inline: 24px;
+  }
+
+  .macow-grid {
+    gap: 10px;
+  }
+
+  .macow-song-card,
+  .macow-artist-card {
+    padding: 7px;
+  }
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.macow-footer {
+  padding: clamp(24px, 3vw, 40px) clamp(16px, 3vw, 56px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.macow-footer p {
+  margin: 0;
+  font-size: clamp(11px, 0.85vw, 13px);
+  color: rgba(255, 255, 255, 0.38);
+  letter-spacing: 0.04em;
+}
+
+.macow-footer a {
+  color: #a78bfa;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.macow-footer a:hover {
+  color: #ec4899;
+}
+
+.macow-empty {
+  text-align: center;
+  padding: clamp(32px, 6vw, 64px) 16px;
+  font-size: clamp(13px, 1vw, 16px);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.macow-empty code {
+  color: #c4b5fd;
 }
